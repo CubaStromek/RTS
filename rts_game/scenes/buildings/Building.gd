@@ -53,7 +53,6 @@ func _draw() -> void:
 
 func queue_unit(unit_type: String, cost_gold: int, cost_wood: int, train_time: float) -> bool:
 	if not ResourceSystem.can_train():
-		print("Cannot train: population cap reached (%d/%d)" % [ResourceSystem.get_population(), ResourceSystem.population_cap])
 		return false
 	if not ResourceSystem.spend_resource("gold", cost_gold):
 		return false
@@ -71,7 +70,6 @@ func queue_unit(unit_type: String, cost_gold: int, cost_wood: int, train_time: f
 
 func _finish_production() -> void:
 	var item: Dictionary = production_queue.pop_front()
-	print("Unit trained: %s" % item["type"])
 	unit_trained.emit(self, item["type"])
 	if production_queue.size() > 0:
 		_production_timer = production_queue[0]["time"]

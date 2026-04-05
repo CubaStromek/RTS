@@ -63,7 +63,6 @@ func _on_selection_changed(units: Array[CharacterBody2D]) -> void:
 func show_building_info(building: StaticBody2D) -> void:
 	_selected_building = building
 	info_panel.visible = true
-	print("show_building_info: %s, queue: %d, timer: %.1f" % [building.building_name, building.production_queue.size(), building._production_timer])
 	_update_building_info(building)
 	_setup_production_buttons(building)
 
