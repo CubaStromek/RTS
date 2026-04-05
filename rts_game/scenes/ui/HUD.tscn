@@ -36,23 +36,30 @@ anchor_bottom = 1.0
 offset_top = -120.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 2
 
 [node name="VBox" type="VBoxContainer" parent="BottomPanel"]
 offset_left = 8.0
 offset_top = 8.0
 offset_right = -8.0
 offset_bottom = -8.0
+mouse_filter = 2
 
 [node name="EntityName" type="Label" parent="BottomPanel/VBox"]
+mouse_filter = 2
 text = ""
 
 [node name="EntityHP" type="Label" parent="BottomPanel/VBox"]
+mouse_filter = 2
 text = ""
 
 [node name="EntityStats" type="Label" parent="BottomPanel/VBox"]
+mouse_filter = 2
 text = ""
 
 [node name="ProductionButtons" type="HBoxContainer" parent="BottomPanel/VBox"]
+mouse_filter = 2
 
 [node name="QueueLabel" type="Label" parent="BottomPanel/VBox"]
+mouse_filter = 2
 text = ""

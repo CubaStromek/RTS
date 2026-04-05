@@ -21,7 +21,7 @@ func _find_selection_box() -> void:
 	if main:
 		_selection_box = main.get_node_or_null("UI/SelectionBox")
 
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		_handle_mouse_button(event)
 	elif event is InputEventMouseMotion and _is_dragging:
