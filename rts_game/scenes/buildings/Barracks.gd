@@ -20,6 +20,9 @@ func _ready() -> void:
 	max_hp = 600
 	hp = max_hp
 
+func _process(delta: float) -> void:
+	super._process(delta)
+
 func train_soldier() -> bool:
 	return queue_unit("soldier", SOLDIER_COST_GOLD, SOLDIER_COST_WOOD, SOLDIER_TRAIN_TIME)
 
