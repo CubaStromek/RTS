@@ -11,16 +11,20 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 36.0
 grow_horizontal = 2
+mouse_filter = 2
 
 [node name="GoldLabel" type="Label" parent="TopBar"]
+mouse_filter = 2
 custom_minimum_size = Vector2(150, 0)
 text = "Gold: 500"
 
 [node name="WoodLabel" type="Label" parent="TopBar"]
+mouse_filter = 2
 custom_minimum_size = Vector2(150, 0)
 text = "Wood: 300"
 
 [node name="UnitCountLabel" type="Label" parent="TopBar"]
+mouse_filter = 2
 custom_minimum_size = Vector2(150, 0)
 text = "Units: 0"
 
