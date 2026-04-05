@@ -1,0 +1,54 @@
+[gd_scene load_steps=2 format=3 uid="uid://hud_scene"]
+
+[ext_resource type="Script" path="res://scenes/ui/HUD.gd" id="1"]
+
+[node name="HUD" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1")
+
+[node name="TopBar" type="HBoxContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 36.0
+grow_horizontal = 2
+
+[node name="GoldLabel" type="Label" parent="TopBar"]
+custom_minimum_size = Vector2(150, 0)
+text = "Gold: 500"
+
+[node name="WoodLabel" type="Label" parent="TopBar"]
+custom_minimum_size = Vector2(150, 0)
+text = "Wood: 300"
+
+[node name="UnitCountLabel" type="Label" parent="TopBar"]
+custom_minimum_size = Vector2(150, 0)
+text = "Units: 0"
+
+[node name="BottomPanel" type="PanelContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -120.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="VBox" type="VBoxContainer" parent="BottomPanel"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+
+[node name="EntityName" type="Label" parent="BottomPanel/VBox"]
+text = ""
+
+[node name="EntityHP" type="Label" parent="BottomPanel/VBox"]
+text = ""
+
+[node name="EntityStats" type="Label" parent="BottomPanel/VBox"]
+text = ""
+
+[node name="ProductionButtons" type="HBoxContainer" parent="BottomPanel/VBox"]
+
+[node name="QueueLabel" type="Label" parent="BottomPanel/VBox"]
+text = ""

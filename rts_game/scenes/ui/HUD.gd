@@ -1,0 +1,91 @@
+extends CanvasLayer
+## Main game HUD — resource bar, selection info panel, production buttons.
+
+@onready var gold_label: Label = $TopBar/GoldLabel
+@onready var wood_label: Label = $TopBar/WoodLabel
+@onready var unit_count_label: Label = $TopBar/UnitCountLabel
+@onready var info_panel: PanelContainer = $BottomPanel
+@onready var info_name: Label = $BottomPanel/VBox/EntityName
+@onready var info_hp: Label = $BottomPanel/VBox/EntityHP
+@onready var info_stats: Label = $BottomPanel/VBox/EntityStats
+@onready var production_container: HBoxContainer = $BottomPanel/VBox/ProductionButtons
+@onready var queue_label: Label = $BottomPanel/VBox/QueueLabel
+
+var _selected_building: StaticBody2D = null
+
+func _ready() -> void:
+	ResourceSystem.resource_changed.connect(_on_resource_changed)
+	SelectionSystem.selection_changed.connect(_on_selection_changed)
+	_update_resources()
+	info_panel.visible = false
+
+func _process(_delta: float) -> void:
+	unit_count_label.text = "Units: %d" % UnitManager.all_units.size()
+	# Update production progress
+	if _selected_building and is_instance_valid(_selected_building):
+		_update_building_info(_selected_building)
+
+func _update_resources() -> void:
+	gold_label.text = "Gold: %d" % ResourceSystem.get_resource("gold")
+	wood_label.text = "Wood: %d" % ResourceSystem.get_resource("wood")
+
+func _on_resource_changed(_type: String, _amount: int) -> void:
+	_update_resources()
+
+func _on_selection_changed(units: Array[CharacterBody2D]) -> void:
+	_selected_building = null
+	_clear_production_buttons()
+
+	if units.size() == 0:
+		info_panel.visible = false
+		return
+
+	info_panel.visible = true
+	if units.size() == 1:
+		var unit := units[0]
+		info_name.text = unit.unit_type.capitalize()
+		info_hp.text = "HP: %d / %d" % [unit.hp, unit.max_hp]
+		info_stats.text = "ATK: %d | SPD: %d | RNG: %d" % [unit.attack_damage, int(unit.move_speed), int(unit.attack_range)]
+	else:
+		info_name.text = "%d units selected" % units.size()
+		info_hp.text = ""
+		info_stats.text = ""
+	queue_label.text = ""
+
+func show_building_info(building: StaticBody2D) -> void:
+	_selected_building = building
+	info_panel.visible = true
+	_update_building_info(building)
+	_setup_production_buttons(building)
+
+func _update_building_info(building: StaticBody2D) -> void:
+	info_name.text = building.building_name
+	info_hp.text = "HP: %d / %d" % [building.hp, building.max_hp]
+	if building.production_queue.size() > 0:
+		var progress := building.get_production_progress()
+		queue_label.text = "Training: %s (%.0f%%) | Queue: %d" % [
+			building.production_queue[0]["type"],
+			progress * 100.0,
+			building.production_queue.size()
+		]
+		info_stats.text = ""
+	else:
+		queue_label.text = ""
+		info_stats.text = ""
+
+func _setup_production_buttons(building: StaticBody2D) -> void:
+	_clear_production_buttons()
+	if building.has_method("train_soldier"):
+		var btn := Button.new()
+		btn.text = "Train Soldier (50g)"
+		btn.pressed.connect(func(): building.train_soldier())
+		production_container.add_child(btn)
+	if building.has_method("train_worker"):
+		var btn := Button.new()
+		btn.text = "Train Worker (50g 25w)"
+		btn.pressed.connect(func(): building.train_worker())
+		production_container.add_child(btn)
+
+func _clear_production_buttons() -> void:
+	for child in production_container.get_children():
+		child.queue_free()
