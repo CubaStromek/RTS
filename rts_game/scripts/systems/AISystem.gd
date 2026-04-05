@@ -27,7 +27,11 @@ func _process(delta: float) -> void:
 			_wave_timer = WAVE_INTERVAL
 
 	# Clean up dead references
-	ai_units = ai_units.filter(func(u: CharacterBody2D) -> bool: return is_instance_valid(u))
+	var alive: Array[CharacterBody2D] = []
+	for u in ai_units:
+		if is_instance_valid(u):
+			alive.append(u)
+	ai_units = alive
 
 	# Command idle AI units to attack player base
 	for unit in ai_units:
