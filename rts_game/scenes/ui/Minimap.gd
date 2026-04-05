@@ -1,5 +1,5 @@
 extends Control
-## Minimap — shows overhead view of units, buildings, and fog in bottom-right corner.
+## Minimap — shows overhead view with click-to-move-camera support.
 
 const MAP_SIZE := Vector2(4000, 4000)
 const MINIMAP_SIZE := Vector2(200, 200)
@@ -11,9 +11,10 @@ const RESOURCE_COLOR := Color(0.3, 0.8, 0.3)
 const CAMERA_RECT_COLOR := Color(1.0, 1.0, 1.0, 0.6)
 
 var fog_system: Node2D = null
+var _is_dragging: bool = false
 
 func _ready() -> void:
-	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	mouse_filter = Control.MOUSE_FILTER_STOP
 	custom_minimum_size = MINIMAP_SIZE
 	size = MINIMAP_SIZE
 
@@ -23,6 +24,25 @@ func _process(_delta: float) -> void:
 		if main:
 			fog_system = main.get_node_or_null("FogOfWar")
 	queue_redraw()
+
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if event.pressed:
+				_is_dragging = true
+				_move_camera_to(event.position)
+				get_viewport().set_input_as_handled()
+			else:
+				_is_dragging = false
+	elif event is InputEventMouseMotion and _is_dragging:
+		_move_camera_to(event.position)
+		get_viewport().set_input_as_handled()
+
+func _move_camera_to(minimap_pos: Vector2) -> void:
+	var world_pos := _minimap_to_world(minimap_pos)
+	var camera := get_viewport().get_camera_2d()
+	if camera:
+		camera.position = world_pos
 
 func _draw() -> void:
 	# Background
@@ -62,3 +82,6 @@ func _draw() -> void:
 
 func _world_to_minimap(world_pos: Vector2) -> Vector2:
 	return (world_pos / MAP_SIZE * MINIMAP_SIZE).clamp(Vector2.ZERO, MINIMAP_SIZE)
+
+func _minimap_to_world(minimap_pos: Vector2) -> Vector2:
+	return minimap_pos / MINIMAP_SIZE * MAP_SIZE
