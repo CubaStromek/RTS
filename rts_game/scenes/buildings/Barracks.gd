@@ -27,4 +27,12 @@ func train_archer() -> bool:
 	return queue_unit("archer", ARCHER_COST_GOLD, ARCHER_COST_WOOD, ARCHER_TRAIN_TIME)
 
 func train_knight() -> bool:
-	return queue_unit("knight", KNIGHT_COST_GOLD, KNIGHT_COST_WOOD, KNIGHT_TRAIN_TIME)
+	print("Train knight requested. Gold: %d, Wood: %d, Pop: %d/%d" % [
+		ResourceSystem.get_resource("gold"),
+		ResourceSystem.get_resource("wood"),
+		ResourceSystem.get_population(),
+		ResourceSystem.population_cap,
+	])
+	var result := queue_unit("knight", KNIGHT_COST_GOLD, KNIGHT_COST_WOOD, KNIGHT_TRAIN_TIME)
+	print("Train knight result: %s" % str(result))
+	return result
