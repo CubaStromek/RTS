@@ -27,32 +27,11 @@ func _input(event: InputEvent) -> void:
 	if build_sys and build_sys.is_building:
 		return
 	if event is InputEventMouseButton:
-		# Skip if mouse is over a UI button (check if event was already handled)
-		if _is_mouse_over_ui():
-			return
 		_handle_mouse_button(event)
 	elif event is InputEventMouseMotion and _is_dragging:
 		_update_selection_box(event.position)
 	elif event is InputEventKey and event.pressed:
 		_handle_key(event)
-
-func _is_mouse_over_ui() -> bool:
-	var viewport := get_viewport()
-	if not viewport:
-		return false
-	var gui_control := viewport.gui_get_focus_owner()
-	if gui_control:
-		return true
-	# Check if mouse is over any STOP-filtered control in HUD
-	var mouse_pos := viewport.get_mouse_position()
-	var vp_size := viewport.get_visible_rect().size
-	# Top bar area
-	if mouse_pos.y < 80:
-		return true
-	# Bottom panel area (when visible)
-	if mouse_pos.y > vp_size.y - 130:
-		return true
-	return false
 
 func _handle_mouse_button(event: InputEventMouseButton) -> void:
 	if event.button_index == MOUSE_BUTTON_LEFT:
