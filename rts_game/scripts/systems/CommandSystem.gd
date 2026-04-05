@@ -25,6 +25,7 @@ func _get_formation_offset(index: int, total: int) -> Vector2:
 	if total <= 1:
 		return Vector2.ZERO
 	var cols := ceili(sqrt(float(total)))
+	@warning_ignore("integer_division")
 	var row := index / cols
 	var col := index % cols
 	var spacing := 40.0
