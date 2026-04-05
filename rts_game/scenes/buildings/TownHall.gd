@@ -14,6 +14,9 @@ func _ready() -> void:
 	max_hp = 1000
 	hp = max_hp
 
+func _process(delta: float) -> void:
+	super._process(delta)
+
 func _draw() -> void:
 	var rect := Rect2(-TOWNHALL_SIZE / 2.0, TOWNHALL_SIZE)
 	draw_rect(rect, building_color)
