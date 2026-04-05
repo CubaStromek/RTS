@@ -1,4 +1,4 @@
-extends "res://scenes/buildings/Building.gd"
+extends BuildingBase
 ## Town Hall — trains workers.
 
 const WORKER_COST_GOLD: int = 50

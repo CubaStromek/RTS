@@ -148,8 +148,9 @@ func _on_unit_trained(building: StaticBody2D, unit_type: String) -> void:
 		_:
 			scene = UnitScene
 	_spawn_unit(scene, building.rally_point, building.team)
-	if has_node("/root/SoundSystem"):
-		SoundSystem.play("build")
+	var snd := get_node_or_null("/root/SoundSystem")
+	if snd:
+		snd.play("build")
 
 func _spawn_unit(scene: PackedScene, pos: Vector2, team: int) -> CharacterBody2D:
 	var unit: CharacterBody2D = scene.instantiate()

@@ -1,4 +1,4 @@
-extends "res://scenes/units/Unit.gd"
+extends Unit
 ## Worker unit — can harvest resources and return them to Town Hall.
 
 enum WorkerState { IDLE, MOVING_TO_RESOURCE, HARVESTING, RETURNING }

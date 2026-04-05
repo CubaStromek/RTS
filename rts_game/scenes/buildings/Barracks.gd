@@ -1,4 +1,4 @@
-extends "res://scenes/buildings/Building.gd"
+extends BuildingBase
 ## Barracks — trains soldiers, archers, and knights.
 
 const SOLDIER_COST_GOLD: int = 50

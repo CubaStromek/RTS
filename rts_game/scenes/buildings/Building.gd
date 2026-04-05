@@ -1,3 +1,4 @@
+class_name BuildingBase
 extends StaticBody2D
 ## Base building with HP, selection, and production queue.
 

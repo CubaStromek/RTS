@@ -1,4 +1,4 @@
-extends "res://scenes/units/Unit.gd"
+extends Unit
 ## Archer — ranged unit with longer attack range but lower HP.
 
 const ARCHER_COLOR := Color(0.6, 0.3, 0.7)

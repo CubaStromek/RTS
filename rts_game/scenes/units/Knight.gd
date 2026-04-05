@@ -1,4 +1,4 @@
-extends "res://scenes/units/Unit.gd"
+extends Unit
 ## Knight — heavy melee unit with high HP and damage, but slow.
 
 const KNIGHT_COLOR := Color(0.8, 0.75, 0.2)
