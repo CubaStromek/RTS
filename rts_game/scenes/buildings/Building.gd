@@ -52,10 +52,11 @@ func _draw() -> void:
 		draw_rect(Rect2(bar_x, bar_y, HP_BAR_WIDTH * hp_ratio, HP_BAR_HEIGHT), fill_color)
 
 func queue_unit(unit_type: String, cost_gold: int, cost_wood: int, train_time: float) -> bool:
+	if not ResourceSystem.can_train():
+		return false
 	if not ResourceSystem.spend_resource("gold", cost_gold):
 		return false
 	if not ResourceSystem.spend_resource("wood", cost_wood):
-		# Refund gold
 		ResourceSystem.add_resource("gold", cost_gold)
 		return false
 

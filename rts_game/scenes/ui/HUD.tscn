@@ -15,23 +15,31 @@ mouse_filter = 2
 
 [node name="GoldLabel" type="Label" parent="TopBar"]
 mouse_filter = 2
-custom_minimum_size = Vector2(150, 0)
+custom_minimum_size = Vector2(120, 0)
 text = "Gold: 500"
 
 [node name="WoodLabel" type="Label" parent="TopBar"]
 mouse_filter = 2
-custom_minimum_size = Vector2(150, 0)
+custom_minimum_size = Vector2(120, 0)
 text = "Wood: 300"
 
-[node name="UnitCountLabel" type="Label" parent="TopBar"]
+[node name="PopLabel" type="Label" parent="TopBar"]
 mouse_filter = 2
-custom_minimum_size = Vector2(150, 0)
-text = "Units: 0"
+custom_minimum_size = Vector2(120, 0)
+text = "Pop: 0/15"
 
 [node name="WaveLabel" type="Label" parent="TopBar"]
 mouse_filter = 2
-custom_minimum_size = Vector2(150, 0)
+custom_minimum_size = Vector2(120, 0)
 text = "Wave: 0"
+
+[node name="BuildBar" type="HBoxContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 40.0
+offset_bottom = 76.0
+grow_horizontal = 2
+mouse_filter = 2
 
 [node name="BottomPanel" type="PanelContainer" parent="."]
 anchors_preset = 12

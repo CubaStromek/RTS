@@ -26,6 +26,7 @@ SelectionSystem="*res://scripts/systems/SelectionSystem.gd"
 CommandSystem="*res://scripts/systems/CommandSystem.gd"
 ResourceSystem="*res://scripts/systems/ResourceSystem.gd"
 SoundSystem="*res://scripts/systems/SoundSystem.gd"
+BuildSystem="*res://scripts/systems/BuildSystem.gd"
 
 [display]
 

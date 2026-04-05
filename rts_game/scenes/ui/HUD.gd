@@ -1,9 +1,9 @@
 extends CanvasLayer
-## Main game HUD — resource bar, wave counter, selection info, production buttons.
+## Main game HUD — resources, population, wave counter, info panel, build buttons.
 
 @onready var gold_label: Label = $TopBar/GoldLabel
 @onready var wood_label: Label = $TopBar/WoodLabel
-@onready var unit_count_label: Label = $TopBar/UnitCountLabel
+@onready var pop_label: Label = $TopBar/PopLabel
 @onready var wave_label: Label = $TopBar/WaveLabel
 @onready var info_panel: PanelContainer = $BottomPanel
 @onready var info_name: Label = $BottomPanel/VBox/EntityName
@@ -11,6 +11,7 @@ extends CanvasLayer
 @onready var info_stats: Label = $BottomPanel/VBox/EntityStats
 @onready var production_container: HBoxContainer = $BottomPanel/VBox/ProductionButtons
 @onready var queue_label: Label = $BottomPanel/VBox/QueueLabel
+@onready var build_panel: HBoxContainer = $BuildBar
 
 var _selected_building: StaticBody2D = null
 
@@ -19,9 +20,10 @@ func _ready() -> void:
 	SelectionSystem.selection_changed.connect(_on_selection_changed)
 	_update_resources()
 	info_panel.visible = false
+	_setup_build_buttons()
 
 func _process(_delta: float) -> void:
-	unit_count_label.text = "Units: %d" % UnitManager.all_units.size()
+	pop_label.text = "Pop: %d/%d" % [ResourceSystem.get_population(), ResourceSystem.population_cap]
 	wave_label.text = "Wave: %d" % GameManager.waves_survived
 	if _selected_building and is_instance_valid(_selected_building):
 		_update_building_info(_selected_building)
@@ -89,6 +91,21 @@ func _setup_production_buttons(building: StaticBody2D) -> void:
 		_add_button("Knight (120g 50w)", func() -> void: building.train_knight())
 	if building.has_method("train_worker"):
 		_add_button("Worker (50g 25w)", func() -> void: building.train_worker())
+
+func _setup_build_buttons() -> void:
+	var build_sys := get_node_or_null("/root/BuildSystem")
+	if not build_sys:
+		return
+	_add_build_button("Barracks (150g 100w)", "barracks", build_sys)
+	_add_build_button("Farm (50g 75w)", "farm", build_sys)
+	_add_build_button("Tower (100g 80w)", "tower", build_sys)
+
+func _add_build_button(text: String, building_type: String, build_sys: Node) -> void:
+	var btn := Button.new()
+	btn.text = text
+	btn.mouse_filter = Control.MOUSE_FILTER_STOP
+	btn.pressed.connect(func() -> void: build_sys.enter_build_mode(building_type))
+	build_panel.add_child(btn)
 
 func _add_button(text: String, callback: Callable) -> void:
 	var btn := Button.new()
