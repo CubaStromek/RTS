@@ -17,14 +17,20 @@ var hud: CanvasLayer = null
 
 func _ready() -> void:
 	print("Medieval RTS started!")
+	GameManager.reset_state()
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 	_setup_selection_box_style()
 	_setup_hud()
 	_setup_fog_of_war()
-	_setup_ai()
+	if GameManager.game_mode == GameManager.GameMode.WAVES:
+		_setup_ai()
 	_spawn_player_base()
 	_spawn_resources()
-	_spawn_enemies()
+	if GameManager.game_mode == GameManager.GameMode.WAVES:
+		_spawn_enemies()
+	if GameManager.game_mode == GameManager.GameMode.SANDBOX:
+		ResourceSystem.resources["gold"] = 1000
+		ResourceSystem.resources["wood"] = 1000
 	_connect_signals()
 
 func _setup_selection_box_style() -> void:
@@ -148,10 +154,18 @@ func _on_unit_trained(building: StaticBody2D, unit_type: String) -> void:
 			scene = KnightScene
 		_:
 			scene = UnitScene
-	_spawn_unit(scene, building.rally_point, building.team)
+	var unit := _spawn_unit(scene, building.rally_point, building.team)
+	# Apply existing tech upgrades to new friendly units
+	if building.team == 0:
+		var tech := get_node_or_null("/root/TechSystem")
+		if tech:
+			tech.apply_all_to_new_unit(unit)
 	var snd := get_node_or_null("/root/SoundSystem")
 	if snd:
-		snd.play("build")
+		snd.play("build_complete")
+	var notify := get_node_or_null("/root/NotificationSystem")
+	if notify and building.team == 0:
+		notify.notify("%s trained!" % unit_type.capitalize())
 
 func _spawn_unit(scene: PackedScene, pos: Vector2, team: int) -> CharacterBody2D:
 	var unit: CharacterBody2D = scene.instantiate()

@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Medieval RTS"
-run/main_scene="res://scenes/main/Main.tscn"
+run/main_scene="res://scenes/ui/MainMenu.tscn"
 config/features=PackedStringArray("4.6")
 
 [autoload]
@@ -27,6 +27,8 @@ CommandSystem="*res://scripts/systems/CommandSystem.gd"
 ResourceSystem="*res://scripts/systems/ResourceSystem.gd"
 SoundSystem="*res://scripts/systems/SoundSystem.gd"
 BuildSystem="*res://scripts/systems/BuildSystem.gd"
+NotificationSystem="*res://scripts/systems/NotificationSystem.gd"
+TechSystem="*res://scripts/systems/TechSystem.gd"
 
 [display]
 
