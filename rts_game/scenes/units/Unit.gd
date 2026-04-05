@@ -124,7 +124,7 @@ func _perform_attack() -> void:
 	_attack_timer = attack_cooldown
 	if attack_target and is_instance_valid(attack_target) and attack_target.has_method("take_damage"):
 		attack_target.take_damage(attack_damage, self)
-			var snd := get_node_or_null("/root/SoundSystem")
+		var snd := get_node_or_null("/root/SoundSystem")
 		if snd:
 			snd.play("attack")
 
