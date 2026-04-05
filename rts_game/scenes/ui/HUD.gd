@@ -62,7 +62,7 @@ func _update_building_info(building: StaticBody2D) -> void:
 	info_name.text = building.building_name
 	info_hp.text = "HP: %d / %d" % [building.hp, building.max_hp]
 	if building.production_queue.size() > 0:
-		var progress := building.get_production_progress()
+		var progress: float = building.get_production_progress()
 		queue_label.text = "Training: %s (%.0f%%) | Queue: %d" % [
 			building.production_queue[0]["type"],
 			progress * 100.0,

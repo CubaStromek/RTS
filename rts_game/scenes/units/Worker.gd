@@ -98,7 +98,7 @@ func _do_harvest(delta: float) -> void:
 	_harvest_timer -= delta
 	if _harvest_timer <= 0.0:
 		_harvest_timer = HARVEST_INTERVAL
-		var taken := target_resource.harvest(target_resource.harvest_rate)
+		var taken: int = target_resource.harvest(target_resource.harvest_rate)
 		carried_amount += taken
 		queue_redraw()
 		if carried_amount >= CARRY_CAPACITY:

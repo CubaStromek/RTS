@@ -67,7 +67,7 @@ func queue_unit(unit_type: String, cost_gold: int, cost_wood: int, train_time: f
 	return true
 
 func _finish_production() -> void:
-	var item := production_queue.pop_front()
+	var item: Dictionary = production_queue.pop_front()
 	unit_trained.emit(self, item["type"])
 	if production_queue.size() > 0:
 		_production_timer = production_queue[0]["time"]
