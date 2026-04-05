@@ -76,15 +76,20 @@ func _update_building_info(building: StaticBody2D) -> void:
 func _setup_production_buttons(building: StaticBody2D) -> void:
 	_clear_production_buttons()
 	if building.has_method("train_soldier"):
-		var btn := Button.new()
-		btn.text = "Train Soldier (50g)"
-		btn.pressed.connect(func(): building.train_soldier())
-		production_container.add_child(btn)
+		_add_button("Soldier (50g)", func() -> void: building.train_soldier())
+	if building.has_method("train_archer"):
+		_add_button("Archer (70g 30w)", func() -> void: building.train_archer())
+	if building.has_method("train_knight"):
+		_add_button("Knight (120g 50w)", func() -> void: building.train_knight())
 	if building.has_method("train_worker"):
-		var btn := Button.new()
-		btn.text = "Train Worker (50g 25w)"
-		btn.pressed.connect(func(): building.train_worker())
-		production_container.add_child(btn)
+		_add_button("Worker (50g 25w)", func() -> void: building.train_worker())
+
+func _add_button(text: String, callback: Callable) -> void:
+	var btn := Button.new()
+	btn.text = text
+	btn.mouse_filter = Control.MOUSE_FILTER_STOP
+	btn.pressed.connect(callback)
+	production_container.add_child(btn)
 
 func _clear_production_buttons() -> void:
 	for child in production_container.get_children():

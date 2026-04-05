@@ -110,6 +110,8 @@ func select() -> void:
 	is_selected = true
 	queue_redraw()
 	selected.emit(self)
+	if has_node("/root/SoundSystem"):
+		SoundSystem.play("select")
 
 func deselect() -> void:
 	is_selected = false
@@ -120,6 +122,8 @@ func _perform_attack() -> void:
 	_attack_timer = attack_cooldown
 	if attack_target and is_instance_valid(attack_target) and attack_target.has_method("take_damage"):
 		attack_target.take_damage(attack_damage, self)
+		if has_node("/root/SoundSystem"):
+			SoundSystem.play("attack")
 
 func _find_aggro_target() -> void:
 	var closest_dist := aggro_range
@@ -133,6 +137,8 @@ func _find_aggro_target() -> void:
 
 func _die() -> void:
 	died.emit(self)
+	if has_node("/root/SoundSystem"):
+		SoundSystem.play("death")
 	# Remove from selection
 	if is_selected:
 		SelectionSystem.selected_units.erase(self)
