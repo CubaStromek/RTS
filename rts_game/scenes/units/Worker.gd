@@ -116,7 +116,7 @@ func _start_returning() -> void:
 		carried_amount = 0
 		state = WorkerState.IDLE
 
-func _do_return(delta: float) -> void:
+func _do_return(_delta: float) -> void:
 	if not return_building or not is_instance_valid(return_building):
 		ResourceSystem.add_resource(carried_type, carried_amount)
 		carried_amount = 0
