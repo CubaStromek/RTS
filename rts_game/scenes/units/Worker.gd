@@ -67,7 +67,7 @@ func move_to(target_pos: Vector2) -> void:
 	target_resource = null
 	super.move_to(target_pos)
 
-func _move_to_resource(delta: float) -> void:
+func _move_to_resource(_delta: float) -> void:
 	if not is_instance_valid(target_resource):
 		state = WorkerState.IDLE
 		return
