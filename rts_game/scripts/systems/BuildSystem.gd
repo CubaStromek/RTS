@@ -13,7 +13,6 @@ const BUILDING_DEFS: Dictionary = {
 
 var is_building: bool = false
 var current_type: String = ""
-var _preview_pos: Vector2 = Vector2.ZERO
 var _preview_node: Node2D = null
 
 func enter_build_mode(building_type: String) -> void:
