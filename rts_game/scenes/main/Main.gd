@@ -17,6 +17,7 @@ var hud: CanvasLayer = null
 
 func _ready() -> void:
 	print("Medieval RTS started!")
+	process_mode = Node.PROCESS_MODE_PAUSABLE
 	_setup_selection_box_style()
 	_setup_hud()
 	_setup_fog_of_war()

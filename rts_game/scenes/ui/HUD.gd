@@ -1,9 +1,10 @@
 extends CanvasLayer
-## Main game HUD — resource bar, selection info panel, production buttons.
+## Main game HUD — resource bar, wave counter, selection info, production buttons.
 
 @onready var gold_label: Label = $TopBar/GoldLabel
 @onready var wood_label: Label = $TopBar/WoodLabel
 @onready var unit_count_label: Label = $TopBar/UnitCountLabel
+@onready var wave_label: Label = $TopBar/WaveLabel
 @onready var info_panel: PanelContainer = $BottomPanel
 @onready var info_name: Label = $BottomPanel/VBox/EntityName
 @onready var info_hp: Label = $BottomPanel/VBox/EntityHP
@@ -21,7 +22,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	unit_count_label.text = "Units: %d" % UnitManager.all_units.size()
-	# Update production progress
+	wave_label.text = "Wave: %d" % GameManager.waves_survived
 	if _selected_building and is_instance_valid(_selected_building):
 		_update_building_info(_selected_building)
 
@@ -48,7 +49,12 @@ func _on_selection_changed(units: Array[CharacterBody2D]) -> void:
 		info_stats.text = "ATK: %d | SPD: %d | RNG: %d" % [unit.attack_damage, int(unit.move_speed), int(unit.attack_range)]
 	else:
 		info_name.text = "%d units selected" % units.size()
-		info_hp.text = ""
+		var total_hp: int = 0
+		var total_max: int = 0
+		for u in units:
+			total_hp += u.hp
+			total_max += u.max_hp
+		info_hp.text = "Total HP: %d / %d" % [total_hp, total_max]
 		info_stats.text = ""
 	queue_label.text = ""
 
