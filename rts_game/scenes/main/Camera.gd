@@ -31,7 +31,7 @@ func _process(delta: float) -> void:
 	var speed_multiplier := 1.0 / zoom.x
 	position += direction.normalized() * MOVE_SPEED * speed_multiplier * delta
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.pressed:
 			if event.button_index == MOUSE_BUTTON_WHEEL_UP:

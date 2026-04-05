@@ -104,19 +104,16 @@ func _add_build_button(text: String, building_type: String, build_sys: Node) -> 
 	var btn := Button.new()
 	btn.text = text
 	btn.mouse_filter = Control.MOUSE_FILTER_STOP
-	btn.pressed.connect(func() -> void: build_sys.enter_build_mode(building_type))
+	btn.pressed.connect(func() -> void:
+		build_sys.enter_build_mode(building_type)
+	)
 	build_panel.add_child(btn)
 
 func _add_button(text: String, callback: Callable) -> void:
 	var btn := Button.new()
 	btn.text = text
 	btn.mouse_filter = Control.MOUSE_FILTER_STOP
-	btn.pressed.connect(func() -> void:
-		callback.call()
-		# Re-show building info so selection stays
-		if _selected_building and is_instance_valid(_selected_building):
-			show_building_info(_selected_building)
-	)
+	btn.pressed.connect(callback)
 	production_container.add_child(btn)
 
 func _clear_production_buttons() -> void:

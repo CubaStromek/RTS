@@ -21,7 +21,7 @@ func _find_selection_box() -> void:
 	if main:
 		_selection_box = main.get_node_or_null("UI/SelectionBox")
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	# Skip if build mode is active
 	var build_sys := get_node_or_null("/root/BuildSystem")
 	if build_sys and build_sys.is_building:
